@@ -1,5 +1,5 @@
 name: test
-on: [ push, pull_request ]
+on: [ push, pull_request, workflow_dispatch ]
 jobs:
   test:
     strategy:
@@ -20,3 +20,9 @@ jobs:
       with:
         name: dhcptest-${{ matrix.os }}
         path: dhcptest.exe
+    - name: Upload binary
+      if: ${{ matrix.os == 'ubuntu-20.04' }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: dhcptest-${{ matrix.os }}
+        path: dhcptest
